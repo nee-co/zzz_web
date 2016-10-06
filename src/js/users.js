@@ -1,4 +1,5 @@
 import m from "mithril";
+import { config } from "./config";
 import Cookies from "js-cookie";
 
 var users = {};
@@ -23,7 +24,7 @@ users.vm.init = function() {
   if (token()) {
     this.user = m.request({
       method: "GET",
-      url: "http://localhost:8000/users",
+      url: `${config.neeco_api_url()}/users`,
       config: (xhr) => xhr.setRequestHeader("Authorization", `Bearer ${token()}`),
       unwrapSuccess: (response) => {
         return new User(response);

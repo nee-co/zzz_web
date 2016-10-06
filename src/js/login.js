@@ -1,4 +1,5 @@
 import m from "mithril";
+import { config } from "./config";
 import Cookies from "js-cookie";
 
 var login = {};
@@ -19,7 +20,7 @@ login.vm.init = function() {
   this.login = function() {
     m.request({
       method: "POST",
-      url: "http://localhost:8000/auth/login",
+      url: `${config.neeco_api_url()}/auth/login`,
       data: { number: this.number, password: this.password },
       unwrapSuccess: (response) => {
         Cookies.set("token", response.token);
