@@ -19,21 +19,19 @@ class User {
 }
 
 users.vm.init = function() {
-  this.token = m.prop(Cookies.get("token"));
-  if (this.token()) {
+  var token = m.prop(Cookies.get("token"));
+  if (token()) {
     this.user = m.request({
       method: "GET",
       url: "http://localhost:8000/users",
-      config: function(xhr) {
-        xhr.setRequestHeader("Authorization", `Bearer ${this.token()}`)
-      }.bind(this),
-      unwrapSuccess: function(response) {
+      config: (xhr) => xhr.setRequestHeader("Authorization", `Bearer ${token()}`),
+      unwrapSuccess: (response) => {
         return new User(response);
-      }.bind(this),
-      unwrapError: function() {
+      },
+      unwrapError: () => {
         Cookies.remove("token");
         m.route("/login");
-      }.bind(this)
+      }
     });
   } else {
     m.route("/login");

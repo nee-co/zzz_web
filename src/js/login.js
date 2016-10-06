@@ -21,13 +21,13 @@ login.vm.init = function() {
       method: "POST",
       url: "http://localhost:8000/auth/login",
       data: { number: this.number, password: this.password },
-      unwrapSuccess: function(response) {
+      unwrapSuccess: (response) => {
         Cookies.set("token", response.token);
         m.route("/users");
-      }.bind(this),
-      unwrapError: function() {
+      },
+      unwrapError: () => {
         this.message("学籍番号もしくはパスワードが違います");
-      }.bind(this)
+      }
     });
   }
 };
